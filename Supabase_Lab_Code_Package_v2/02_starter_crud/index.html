@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <!-- กำหนดชุดรหัสอักขระเป็น UTF-8 เพื่อรองรับภาษาไทยอย่างถูกต้อง -->
+  <meta charset="UTF-8" />
+  <!-- กำหนด Viewport ให้หน้าเว็บแสดงผลได้เหมาะสมกับทั้งคอมพิวเตอร์และมือถือ (Responsive) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Supabase ตอนที่ 3: ระบบจัดการงาน (CRUD พื้นฐาน)</title>
+
+  <!-- ====================================================================== -->
+  <!-- การโหลด Web Font จาก Google Fonts (ฟอนต์ 'Prompt' สำหรับภาษาไทย)       -->
+  <!-- preconnect ช่วยให้เบราว์เซอร์เชื่อมต่อเซิร์ฟเวอร์ฟอนต์ล่วงหน้า ลดเวลาโหลด -->
+  <!-- ====================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- เชื่อมต่อไฟล์ CSS สำหรับตกแต่งหน้าตาเว็บไซต์ -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ====================================================================== -->
+  <!-- โหลดไลบรารี Supabase JavaScript Client (SDK) เวอร์ชัน 2 ผ่าน CDN        -->
+  <!-- ทำให้สามารถเรียกใช้ window.supabase.createClient() ได้โดยไม่ต้องลง npm -->
+  <!-- ====================================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <main class="container">
+    <!-- ส่วนหัวของแอปพลิเคชัน -->
+    <header class="app-header">
+      <span class="badge">ปฏิบัติการตอนที่ 3 : CRUD</span>
+      <h1>ระบบจัดการงาน (Supabase To-Do)</h1>
+      <p class="subtitle">เชื่อมต่อ PostgreSQL บนคลาวด์ด้วย HTML5 + Vanilla JavaScript</p>
+    </header>
+
+    <!-- แถบแสดงสถานะการเชื่อมต่อกับ Supabase -->
+    <div id="statusBanner" class="status-banner status-loading">
+      กำลังตรวจสอบการเชื่อมต่อกับ Supabase...
+    </div>
+
+    <!-- ฟอร์มสำหรับเพิ่มรายการงานใหม่ (Create) -->
+    <section class="card">
+      <h2>เพิ่มรายการงานใหม่</h2>
+      <form id="todoForm" class="todo-form">
+        <input
+          type="text"
+          id="todoTitle"
+          placeholder="พิมพ์ชื่องานที่ต้องทำ เช่น ส่งใบงาน Supabase..."
+          required
+        />
+        <select id="todoCategory" aria-label="หมวดหมู่">
+          <option value="ทั่วไป">ทั่วไป</option>
+          <option value="การเรียน">การเรียน</option>
+          <option value="งานส่วนตัว">งานส่วนตัว</option>
+          <option value="ความปลอดภัย">ความปลอดภัย</option>
+        </select>
+        <button type="submit" class="btn btn-primary">+ เพิ่มงาน</button>
+      </form>
+    </section>
+
+    <!-- ส่วนแสดงรายการงานทั้งหมดจากฐานข้อมูล (Read / Update / Delete) -->
+    <section class="card">
+      <div class="list-header">
+        <h2>รายการงานทั้งหมด (<span id="todoCount">0</span>)</h2>
+        <button id="refreshBtn" type="button" class="btn btn-secondary">รีเฟรชข้อมูล</button>
+      </div>
+
+      <!-- พื้นที่สำหรับให้ JavaScript สร้าง <li> มาแสดงผลแบบไดนามิก -->
+      <ul id="todoList" class="todo-list">
+        <li class="empty-state">กำลังโหลดข้อมูล...</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- โหลดไฟล์ JavaScript หลักไว้ท้าย <body> เพื่อให้ DOM โหลดครบก่อนรันสคริปต์ -->
+  <script src="app.js"></script>
+</body>
+</html>
